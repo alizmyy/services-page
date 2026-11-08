@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Артем | Веб-разработчик</title>
+    <style>
+        /* --- СБРОС СТИЛЕЙ --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #050505;
+            color: #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        /* --- ВЕРХНЕЕ МЕНЮ --- */
+        nav {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            z-index: 10;
+            border-bottom: 1px solid #2d3748;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: #38bdf8;
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+        }
+
+        .nav-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            margin-left: 30px;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #38bdf8;
+        }
+
+        /* --- ОБЩИЕ СЕКЦИИ --- */
+        section {
+            width: 100%;
+            max-width: 1100px;
+            padding: 80px 20px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .section-title {
+            font-size: 32px;
+            color: #ffffff;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+            text-align: center;
+        }
+
+        /* --- УСЛУГИ --- */
+        .services-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .service-card {
+            background: rgba(20, 20, 25, 0.8);
+            border: 1px solid #2d3748;
+            border-radius: 16px;
+            padding: 30px 25px;
+            flex: 1 1 300px;
+            max-width: 350px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.4s ease, opacity 0.8s ease, transform 0.8s ease;
+            position: relative;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .service-card.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-color: #38bdf8;
+            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.15);
+            background: rgba(30, 30, 40, 0.9);
+        }
+
+        .icon { font-size: 40px; margin-bottom: 15px; }
+        .service-card h2 { color: #ffffff; font-size: 20px; margin-bottom: 10px; }
+        .service-card p { color: #94a3b8; font-size: 14px; line-height: 1.6; margin-bottom: 20px; flex-grow: 1; }
+        .price { font-size: 22px; font-weight: 800; color: #38bdf8; margin-bottom: 15px; }
+        
+        .btn-order {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            background-color: transparent;
+            color: #38bdf8;
+            border: 2px solid #38bdf8;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-order:hover { background-color: #38bdf8; color: #000; }
+
+        /* --- ОБО МНЕ --- */
+        .about-text {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #cbd5e1;
+            max-width: 800px;
+            text-align: center;
+            background: rgba(20, 20, 25, 0.8);
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #2d3748;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .about-text strong {
+            color: #38bdf8;
+        }
+
+        /* --- ПРОЦЕСС РАБОТЫ --- */
+        .process-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .process-step {
+            background: rgba(20, 20, 25, 0.8);
+            border: 1px solid #2d3748;
+            border-radius: 16px;
+            padding: 25px;
+            flex: 1 1 200px;
+            max-width: 240px;
+            text-align: center;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .process-step:hover {
+            border-color: #38bdf8;
+            transform: translateY(-5px);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: #38bdf8;
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin: 0 auto 15px auto;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+        }
+
+        .process-step h3 {
+            color: #ffffff;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .process-step p {
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* --- FAQ --- */
+        .faq-container {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .faq-item {
+            background: rgba(20, 20, 25, 0.8);
+            border: 1px solid #2d3748;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 18px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #e2e8f0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .faq-question:hover {
+            background: rgba(56, 189, 248, 0.1);
+            color: #38bdf8;
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.6;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 20px 20px;
+            max-height: 200px;
+        }
+
+        /* --- КОНТАКТЫ --- */
+        .cta-section {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            border: 1px solid #4f46e5;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 0 40px rgba(79, 70, 229, 0.2);
+            margin-top: 20px;
+        }
+
+        .cta-section h2 { color: #ffffff; font-size: 28px; margin-bottom: 15px; }
+        .cta-section p { color: #94a3b8; font-size: 15px; margin-bottom: 25px; }
+
+        .btn-telegram {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+            background: linear-gradient(90deg, #0088cc 0%, #00bfff 100%);
+            color: white;
+            padding: 14px 35px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 16px;
+            transition: transform 0.1s ease-out, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 136, 204, 0.4);
+        }
+
+        .btn-telegram:hover { box-shadow: 0 8px 25px rgba(0, 136, 204, 0.6); }
+        .tg-icon { width: 22px; height: 22px; fill: currentColor; }
+
+        .copy-btn {
+            background: transparent;
+            border: 1px solid #38bdf8;
+            color: #38bdf8;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+        .copy-btn:hover { background: #38bdf8; color: #000; }
+
+        /* --- ПОДВАЛ --- */
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 25px;
+            border-top: 1px solid #2d3748;
+            color: #64748b;
+            font-size: 13px;
+            background: rgba(5, 5, 5, 0.9);
+            margin-top: 40px;
+        }
+
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #38bdf8;
+            color: #000;
+            text-align: center;
+            border-radius: 8px;
+            padding: 16px;
+            position: fixed;
+            z-index: 100;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s, bottom 0.3s;
+        }
+        #toast.show { visibility: visible; opacity: 1; bottom: 50px; }
+
+        @media (max-width: 768px) {
+            nav { padding: 15px 20px; flex-direction: column; gap: 15px; }
+            .nav-links a { margin: 0 10px; font-size: 14px; }
+            section { padding-top: 120px; }
+            .section-title { font-size: 26px; }
+            .process-step { max-width: 100%; }
+            .about-text { font-size: 16px; padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="particles-js"></div>
+
+    <nav>
+        <div class="logo">Artem.dev</div>
+        <div class="nav-links">
+            <a href="#services">Услуги</a>
+            <a href="#about">Обо мне</a>
+            <a href="#process">Как я работаю</a>
+            <a href="#faq">Вопросы</a>
+            <a href="#contact">Контакты</a>
+        </div>
+    </nav>
+
+    <section id="services">
+        <h1 class="section-title">Мои услуги</h1>
+        <div class="services-container">
+            <div class="service-card">
+                <div class="icon">💻</div>
+                <h2>Верстка по макету</h2>
+                <p>Сверстаю ваш дизайн с нуля. Чистый HTML и CSS, адаптивность под телефоны и планшеты.</p>
+                <div class="price">от 500 ₽</div>
+                <a href="https://kwork.ru" target="_blank" class="btn-order">Заказать</a>
+            </div>
+            <div class="service-card">
+                <div class="icon">🔧</div>
+                <h2>Правка кода</h2>
+                <p>Исправлю ошибки в HTML/CSS, настрою JavaScript. Помогу, если сайт «сломался».</p>
+                <div class="price">от 300 ₽</div>
+                <a href="https://kwork.ru" target="_blank" class="btn-order">Заказать</a>
+            </div>
+            <div class="service-card">
+                <div class="icon">📱</div>
+                <h2>Адаптивность</h2>
+                <p>Сделаю так, чтобы ваш сайт отлично выглядел на смартфонах. Уберу съехавшие блоки.</p>
+                <div class="price">от 400 ₽</div>
+                <a href="https://kwork.ru" target="_blank" class="btn-order">Заказать</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- СЕКЦИЯ "ОБО МНЕ" (теперь идет сразу после услуг) -->
+    <section id="about">
+        <h2 class="section-title">Обо мне</h2>
+        <div class="about-text">
+            Привет! Меня зовут <strong>Артем</strong>. Я начинающий frontend-разработчик. 
+            Изучаю веб-технологии и уже реализовал несколько проектов: от личной визитки до интерактивных опросов с подключением к базе данных. 
+            Пишу чистый код и внимательно отношусь к деталям. <br><br>
+            Мне важно, чтобы сайт не просто «работал», но и был удобным для пользователей. Буду рад помочь с вашим проектом!
+        </div>
+    </section>
+
+    <!-- СЕКЦИЯ "КАК Я РАБОТАЮ" (переместили сюда) -->
+    <section id="process">
+        <h2 class="section-title">Как я работаю</h2>
+        <div class="process-container">
+            <div class="process-step">
+                <div class="step-number">1</div>
+                <h3>Заявка</h3>
+                <p>Вы пишете мне в Telegram и описываете задачу.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">2</div>
+                <h3>Обсуждение</h3>
+                <p>Мы обсуждаем детали, сроки и стоимость работы.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">3</div>
+                <h3>Верстка</h3>
+                <p>Я выполняю работу и показываю промежуточный результат.</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">4</div>
+                <h3>Сдача</h3>
+                <p>Вносим правки (если нужно) и получаете готовый код.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq">
+        <h2 class="section-title">Частые вопросы</h2>
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">Какие макеты вы принимаете? <span>+</span></div>
+                <div class="faq-answer">Я работаю с Figma, PSD, а также могу сверстать по обычной картинке (JPG/PNG). Если у вас нет макета — напишите мне, мы обсудим индивидуальную разработку.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Сколько времени занимает верстка? <span>+</span></div>
+                <div class="faq-answer">Стандартный блок или небольшую страницу я верстаю за 1 день. Если проект сложный — сроки обсуждаются индивидуально.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Вы делаете сайты с нуля? <span>+</span></div>
+                <div class="faq-answer">В рамках этих услуг я верстаю по готовому дизайну. Если у вас нет дизайна, я могу порекомендовать хороших дизайнеров.</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="cta-section">
+            <h2>Остались вопросы?</h2>
+            <p>Если у вас есть нестандартная задача или вы просто хотите обсудить проект перед заказом — напишите мне в Telegram. Отвечаю быстро!</p>
+            <a href="https://t.me/vpootoke" target="_blank" class="btn-telegram" id="magnetic-btn">
+                <svg class="tg-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                </svg>
+                Написать в Telegram
+            </a>
+            <br>
+            <button class="copy-btn" onclick="copyText('@vpootoke')">Скопировать мой ник</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Артем. Все права защищены.</p>
+        <p style="margin-top: 5px; font-size: 12px;">Сделано с душой и на чистом HTML/CSS/JS</p>
+    </footer>
+
+    <div id="toast">Жду вашего сообщения в Telegram!</div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 40, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#38bdf8" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.3, "random": true },
+                "size": { "value": 3, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#38bdf8", "opacity": 0.2, "width": 1 },
+                "move": { "enable": true, "speed": 1.5, "direction": "none", "random": true, "straight": false }
+            },
+            "interactivity": { "events": { "onhover": { "enable": true, "mode": "grab" } } },
+            "retina_detect": true
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const cards = document.querySelectorAll('.service-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => { card.classList.add('reveal'); }, index * 200);
+            });
+        });
+
+        const magneticBtn = document.getElementById('magnetic-btn');
+        magneticBtn.addEventListener('mousemove', (e) => {
+            const rect = magneticBtn.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const distanceX = e.clientX - centerX;
+            const distanceY = e.clientY - centerY;
+            magneticBtn.style.transform = `translate(${distanceX * 0.3}px, ${distanceY * 0.3}px) scale(1.05)`;
+        });
+        magneticBtn.addEventListener('mouseleave', () => {
+            magneticBtn.style.transform = `translate(0px, 0px) scale(1)`;
+        });
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const toast = document.getElementById("toast");
+                toast.className = "show";
+                setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+            });
+        }
+
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                document.querySelectorAll('.faq-item').forEach(otherItem => {
+                    if (otherItem !== item) otherItem.classList.remove('active');
+                });
+                item.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
